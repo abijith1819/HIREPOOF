@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HireProof</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen" class="screen">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="login-box fade-in">
+      <div class="logo-wrap">
+        <div class="holo-ring"></div>
+        <div class="logo-circle">🛡️</div>
+      </div>
+      <h1 class="gradient-text">HireProof</h1>
+      <div class="subtitle">ACCESS TERMINAL</div>
+
+      <div class="mode-toggle">
+        <button id="mode-login" class="mode-btn active">SIGN IN</button>
+        <button id="mode-register" class="mode-btn">REGISTER</button>
+      </div>
+
+      <div class="card login-card">
+        <div id="name-field" style="display:none;">
+          <label>NAME</label>
+          <input type="text" id="reg-name" placeholder="Your full name" />
+        </div>
+        <label>EMAIL</label>
+        <input type="email" id="login-email" placeholder="you@example.com" />
+        <label>PASSWORD</label>
+        <input type="password" id="login-password" placeholder="••••••••" />
+        <div id="confirm-field" style="display:none;">
+          <label>CONFIRM PASSWORD</label>
+          <input type="password" id="reg-confirm" placeholder="••••••••" />
+        </div>
+        <div id="login-error" class="error-text"></div>
+        <button id="submit-login" class="btn-primary">Sign In</button>
+        <button id="guest-login" class="btn-ghost full">Continue as Guest</button>
+      </div>
+      <div class="demo-note">DEMO — accepts any credentials, nothing is sent anywhere.</div>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app-screen" class="screen" style="display:none;">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container">
+      <header>
+        <div>
+          <div class="brand-row">
+            <div class="holo-wrap-small">
+              <div class="holo-ring-small"></div>
+              <span class="logo-small">🛡️</span>
+            </div>
+            <span class="gradient-text brand-name">HireProof</span>
+          </div>
+          <div class="header-subtitle">JOB-READINESS ASSESSMENT DOSSIER</div>
+        </div>
+        <div class="header-right">
+          <button id="check-vacancies" class="btn-ghost">🔔 Check Vacancies</button>
+          <div class="user-info">
+            <div id="user-email" class="user-email"></div>
+            <button id="sign-out" class="link-btn">sign out</button>
+          </div>
+        </div>
+      </header>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="overview">📊 Overview</button>
+        <button class="tab" data-tab="assessment">🏷️ Assessment</button>
+        <button class="tab" data-tab="interview">💬 Interview Prep</button>
+        <button class="tab" data-tab="applications">📋 Applications</button>
+        <button class="tab" data-tab="roadmap">🗺️ Roadmap</button>
+      </nav>
+
+      <!-- OVERVIEW TAB -->
+      <section id="tab-overview" class="tab-panel active fade-in">
+        <div class="section-label"><span class="num">00</span><span class="title">Case Overview</span><div class="line"></div></div>
+        <div class="stats-row">
+          <div class="stat-card tilt">
+            <div class="stat-label">RESUME SCORE</div>
+            <div id="stat-score" class="stat-value">—</div>
+            <div id="stat-score-sub" class="stat-sub">Run an assessment</div>
+          </div>
+          <div class="stat-card tilt">
+            <div class="stat-label">JOB MATCH</div>
+            <div id="stat-match" class="stat-value">—</div>
+            <div id="stat-match-sub" class="stat-sub">Add a JD to compare</div>
+          </div>
+          <div class="stat-card tilt">
+            <div class="stat-label">ROADMAP PROGRESS</div>
+            <div id="stat-roadmap" class="stat-value">—</div>
+            <div id="stat-roadmap-sub" class="stat-sub">Generate a roadmap</div>
+          </div>
+          <div class="stat-card tilt">
+            <div class="stat-label">APPLICATIONS</div>
+            <div id="stat-apps" class="stat-value">0</div>
+            <div id="stat-apps-sub" class="stat-sub">0 in interview · 0 offers</div>
+          </div>
+        </div>
+
+        <div class="section-label"><span class="num">01</span><span class="title">Application Pipeline</span><div class="line"></div></div>
+        <div id="pipeline-row" class="pipeline-row"></div>
+
+        <div class="section-label"><span class="num">02</span><span class="title">Next Actions</span><div class="line"></div></div>
+        <div id="next-actions" class="next-actions"></div>
+      </section>
+
+      <!-- ASSESSMENT TAB -->
+      <section id="tab-assessment" class="tab-panel">
+        <div class="section-label"><span class="num">01</span><span class="title">Subject — Resume</span><div class="line"></div></div>
+        <button id="sample-resume" class="btn-ghost small">use sample resume</button>
+        <textarea id="resume-text" rows="7" placeholder="Paste resume text here..."></textarea>
+
+        <div class="section-label"><span class="num">02</span><span class="title">Position — Job Description (optional)</span><div class="line"></div></div>
+        <button id="sample-jd" class="btn-ghost small">use sample JD</button>
+        <textarea id="jd-text" rows="5" placeholder="Paste a target job description to check match..."></textarea>
+
+        <div id="assessment-error" class="error-text"></div>
+        <button id="run-assessment" class="btn-primary">Run Assessment</button>
+
+        <div id="assessment-result" style="display:none;"></div>
+      </section>
+
+      <!-- INTERVIEW TAB -->
+      <section id="tab-interview" class="tab-panel">
+        <div class="section-label"><span class="num">01</span><span class="title">Practice Set</span><div class="line"></div></div>
+        <p class="hint-text">Generates a full mock interview set tailored to the resume entered in the Assessment tab. Write an answer to any question and get instant feedback.</p>
+        <div id="interview-error" class="error-text"></div>
+        <button id="generate-questions" class="btn-primary">Generate Interview Questions</button>
+        <div id="interview-result"></div>
+      </section>
+
+      <!-- APPLICATIONS TAB -->
+      <section id="tab-applications" class="tab-panel">
+        <div class="section-label"><span class="num">01</span><span class="title">Application Log</span><div class="line"></div></div>
+        <div class="app-form">
+          <input type="text" id="app-company" placeholder="Company" />
+          <input type="text" id="app-role" placeholder="Role" />
+          <select id="app-status">
+            <option>Applied</option>
+            <option>Interview</option>
+            <option>Offer</option>
+            <option>Rejected</option>
+          </select>
+          <button id="add-app" class="btn-gold">+ Add</button>
+        </div>
+        <div class="card" style="padding:0; overflow:hidden;">
+          <div class="table-header">
+            <div>COMPANY</div><div>ROLE</div><div>STATUS</div><div></div><div></div>
+          </div>
+          <div id="app-list"></div>
+        </div>
+        <p class="hint-text">Applications marked "Applied" for 7+ days are flagged for follow-up.</p>
+      </section>
+
+      <!-- ROADMAP TAB -->
+      <section id="tab-roadmap" class="tab-panel">
+        <div class="section-label"><span class="num">01</span><span class="title">Target Role</span><div class="line"></div></div>
+        <div class="roadmap-form">
+          <select id="roadmap-role">
+            <option>Frontend Developer</option>
+            <option>Backend Developer</option>
+            <option>Full Stack Developer</option>
+            <option>Data Analyst</option>
+            <option>Data Scientist</option>
+            <option>DevOps Engineer</option>
+            <option>QA / Test Engineer</option>
+            <option>UI/UX Designer</option>
+            <option>Product Manager</option>
+          </select>
+          <button id="generate-roadmap" class="btn-gold">Generate Roadmap</button>
+        </div>
+        <div id="roadmap-result"></div>
+      </section>
+    </div>
+
+    <!-- Vacancy Alert Popup -->
+    <div id="vacancy-alert" class="vacancy-alert" style="display:none;">
+      <div class="vacancy-inner">
+        <div class="vacancy-header">
+          <span>🔔 VACANCY ALERT</span>
+          <button id="close-vacancy" class="link-btn">✕</button>
+        </div>
+        <div id="vacancy-role" class="vacancy-role"></div>
+        <div id="vacancy-company" class="vacancy-company"></div>
+        <div class="vacancy-actions">
+          <a id="vacancy-apply" href="#" target="_blank" class="btn-gold small">Apply Now</a>
+          <button id="vacancy-save" class="btn-ghost small">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
